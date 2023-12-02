@@ -391,11 +391,7 @@ The entrypoint can then take any command to run in the container and will run it
 You can refer to the `EPFL-runai-setup/README.md` for an idea of how this would work on a Kubernetes cluster
 interfaced with Run:ai.
 
-> [!IMPORTANT]
-> **TEMPLATE TODO:**
-> Remove the [FROM-PYTHON] or [FROM-SCRATCH] prefix of the method you use and delete the other method's section.
-
-## [FROM-PYTHON] Instructions to maintain the environment
+## Instructions to maintain the environment
 
 The environment is based on an image which already contains system and Python dependencies.
 Extra dependencies are managed as follows:
@@ -481,112 +477,6 @@ For dependencies that require a custom installation or build, edit the `Dockerfi
 If one of these complex dependencies shows in the `requirements.txt` after the freeze,
 you have to remove it, so that pip does not pick it up, and it is installed independently in the `Dockerfile`.
 (Something similar is done in the `update-env-file`.)
-
-For `apt` dependencies add them manually to the `apt-*.txt` files.
-
-## [FROM-SCRATCH] Instructions to maintain the environment
-
-System dependencies are managed by both `apt` and `conda`.
-Python dependencies are managed by both `conda` and `pip`.
-
-- Use `apt` for system programs (e.g. `sudo`, `zsh`, `gcc`),
-  leave libraries (e.g., image libraries etc.) to `conda` whenever possible.
-- Use `conda` for non-Python dependencies needed to run the project code (e.g. `mkl`, `swig`, `imageio`, etc.).
-- Use `conda` for Python dependencies packaged with more than just Python code (e.g. `pytorch`, `numpy`).
-  These will typically be your main dependencies and will likely not change as your project grows.
-- Use `pip` for the rest of the Python dependencies.
-- For more complex dependencies that may require a custom installation or build, use the `Dockerfile` directly.
-
-Here are references and reasons to follow the above claims:
-
-* [A guide for managing `conda` + `pip` environments](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#using-pip-in-an-environment).
-* [Reasons to  use `conda` for not-Python-only dependencies](https://numpy.org/install/#numpy-packages--accelerated-linear-algebra-libraries).
-* [Ways of combining `conda` and `pip`](https://towardsdatascience.com/conda-essential-concepts-and-tricks-e478ed53b5b#42cb).
-
-There are two ways to add dependencies to the environment:
-
-1. **Manually edit the dependency files.**
-   This will be needed the first time you set up the environment.
-   It will also be useful if you run into conflicts and have to restart from scratch.
-2. **Add/upgrade dependencies interactively** while running a shell in the container to experiment with which
-   dependency is needed.
-   This is probably what you'll be doing after building the image for the first time.
-
-In both cases, after any change, a snapshot of the full environment specification should be written
-to the dependency files.
-We describe how to do so in the Freeze the Environment section.
-
-### Manual editing (before/while building)
-
-- To edit the `apt` dependencies, edit the `dependencies/apt-*.txt` files.
-  `apt` dependencies are separated into three files to help with multi-stage builds and keep final images small.
-    - In `apt-build.txt` put the dependencies needed to build the environment, e.g., compilers, build tools, etc.
-      We provide a set of minimal dependencies as an example.
-    - In `apt-runtime.txt` put the dependencies needed to run the environment, e.g., image processing libraries when not
-      available in conda, etc.
-    - In `apt-dev.txt` put the utilities that will help you develop in the container, e.g. `htop`, `vim`, etc.
-
-  If you're not familiar with which dependencies are needed for each stage, you can start with the minimal set we
-  give.
-  When you encounter errors during the image build, add the missing dependencies to the stage where the error
-  occurred.
-- To edit the `conda` and `pip` dependencies, edit the `dependencies/environment.yml` file.
-- To edit the more complex dependencies, edit the `Dockerfile`.
-
-When manually editing the dependency files,
-you do not need to specify the specific version of all the dependencies,
-these will be written to the file when you freeze the environment.
-You should just specify the major versions of specific dependencies you need.
-
-### Interactively (while developing)
-
-`conda` dependencies should all be installed before any `pip` dependency.
-This will cause conflicts otherwise as `conda` doesn't track the `pip` dependencies.
-So if you need to add a `conda` dependency after you already installed some `pip` dependencies, you need to recreate
-the environment by manually adding the dependencies before the build as described in the previous section.
-
-* To add `apt`  dependencies run `sudo apt install <package>`
-* To add `conda` dependencies run `mamba install <package>`
-* To add `pip` dependencies run `pip install <package>`
-
-### Freeze the environment
-
-After any change to the dependencies, a snapshot of the full environment specification should be written to the
-dependency files.
-This includes changes during a build and changes made interactively.
-This is to ensure that the environment is reproducible and that the dependencies are tracked at any point in time.
-
-To do so, run the following from a login shell in the container.
-The script overwrites the `dependencies/environment.yml` file with the current environment specification,
-so it's a good idea to commit the changes to the environment file before/after running it.
-
-The script isn't just a `mamba env export`
-and the file it generates isn't made to recreate the complete environment from scratch,
-it is tightly coupled to the Dockerfile.
-In this sense, packages it installs may depend on system dependencies installed by the Dockerfile
-and dependencies installed at later stages will not be listed.
-
-**Note:** A strict `mamba env export` is recorded 
-
-The purpose of the generated `environment.yml` is to be used always at the same stage of the Dockerfile
-to install the initial set of dependencies.
-(and not install dependencies that the Dockerfile will build and install later).
-In any case,
-the Dockerfile also records the snapshots of the dependency files used to generate each stage for debugging that can be
-found in the `/opt/template-dependencies/` directory. 
-
-```bash
-update-env-file
-```
-
-The script isn't perfect, and there are some caveats (e.g., packages installed from GitHub with pip),
-so have a look at the output file to make sure it does what you want.
-The `dependencies/update-env-file.sh` gives some hints for what to do,
-and in any case you can always patch the file manually.
-
-For dependencies that require a custom installation or build, edit the `Dockerfile`.
-If one of these complex dependencies shows in the `environment.yml` after the freeze,
-you have to remove it, so that conda does not pick it up, and it is installed independently in the `Dockerfile`.
 
 For `apt` dependencies add them manually to the `apt-*.txt` files.
 
