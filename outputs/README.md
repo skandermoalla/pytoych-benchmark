@@ -12,7 +12,7 @@ This allows the experiment code to always refer to the same path for the outputs
 for better reproducibility.
 The output directories in `PROJECT_ROOT/outputs/` don't actually need to be physically in the same directory
 as the project, you can create symlinks to them.
-The default setup config `src/template_package_name/configs/setup.yaml` defines an outputs subdirectory where it will save the outputs.
+The default setup config `src/pytoych_benchmark/configs/setup.yaml` defines an outputs subdirectory where it will save the outputs.
 This is by default `PROJECT_ROOT/outputs/dev` (so you can symlink that location to somewhere else).
 This design shifts the outputs' path configuration from the code and config which should be identical across runs
 to the installation steps where you will create your symlinks.

@@ -54,8 +54,8 @@ Follow the steps below to get started.
 Clone the git repository.
 
 ```bash
-git clone <URL/SSH> template-project-name
-cd template-project-name
+git clone <URL/SSH> pytoych-benchmark
+cd pytoych-benchmark
 ```
 
 We will refer the absolute path to the root of the repository as `PROJECT_ROOT`.
@@ -90,7 +90,7 @@ Install the project with
 
 ```bash
 # Activate the environment
-mamba activate template-project-name
+mamba activate pytoych-benchmark
 # When in the PROJECT_ROOT directory.
 pip install -e .
 ```
@@ -98,7 +98,7 @@ pip install -e .
 ## Running the code in the environment
 
 ```bash
-mamba activate template-project-name
+mamba activate pytoych-benchmark
 ```
 
 Run the scripts from the `PROJECT_ROOT` directory.
@@ -106,7 +106,7 @@ Here are some examples.
 
 ```bash
 # When in the PROJECT_ROOT directory.
-python -m template_package_name.some_experiment some_arg=some_value
+python -m pytoych_benchmark.some_experiment some_arg=some_value
 source reproducibility-scripts/some-experiment.sh
 ```
 
@@ -159,9 +159,9 @@ After manually editing the `environment.yml` file, you need to recreate the envi
 ```bash
 # When in the PROJECT_ROOT directory.
 mamba deactivate
-mamba env remove --name template-project-name
+mamba env remove --name pytoych-benchmark
 mamba env create --file installation/conda-osx-arm64-mps/environment.yml
-mamba activate template-project-name
+mamba activate pytoych-benchmark
 ```
 
 ### Interactively (while developing)

@@ -1,7 +1,7 @@
 # Run with wandb sweep reproducibility-scripts/some_sweep.yaml to generate a sweep.
 # Run with wandb agent some-sweep-id to run the sweep.
 
-project: template-project-name
+project: pytoych-benchmark
 name: some-sweep
 method: grid
 metric:
@@ -18,5 +18,5 @@ parameters:
 command:
   - python
   - "-m"
-  - "template_package_name.some_experiment"
+  - "pytoych_benchmark.some_experiment"
   - ${args_no_hyphens}

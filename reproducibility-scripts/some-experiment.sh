@@ -1,1 +1,1 @@
-python -m template_package_name.some_experiment
+python -m pytoych_benchmark.some_experiment

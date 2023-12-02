@@ -21,7 +21,7 @@ LAB_NAME=$(id -un | tr "[:upper:]" "[:lower:]")
 ## For running locally
 # You can find the acceleration options in the compose.yaml file
 # by looking at the services with names dev-local-ACCELERATION.
-PROJECT_ROOT_AT=/project/template-project-name
+PROJECT_ROOT_AT=/project/pytoych-benchmark
 ACCELERATION=cpu
 WANDB_API_KEY=
 
@@ -29,8 +29,8 @@ WANDB_API_KEY=
 # Project-specific environment variables.
 ## Used to avoid writing paths multiple times and creating inconsistencies.
 ## You should not need to change anything below this line.
-PROJECT_NAME=template-project-name
-PACKAGE_NAME=template_package_name
+PROJECT_NAME=pytoych-benchmark
+PACKAGE_NAME=pytoych_benchmark
 IMAGE_NAME=\${LAB_NAME}/\${USR}/\${PROJECT_NAME}
 # The image name also includes the USR
 # to avoid conflicts between users using the same build machine
@@ -146,7 +146,7 @@ push_usr_or_root() {
   PUSH_IMAGE_NAME="${2}"
   if [ "${PUSH_IMAGE_NAME}" == "" ]; then
     echo "[TEMPLATE ERROR] Please specify the complete name of the image to push."
-    echo "For example: ./template.sh push docker.io/skandermoalla/template-project-name"
+    echo "For example: ./template.sh push docker.io/skandermoalla/pytoych-benchmark"
     echo "EPFL people can just do ./template.sh push IC or ./template.sh push RCP
       And it will be pushed to ic-registry.epfl.ch/${IMAGE_NAME}
       or registry.rcp.epfl.ch/${IMAGE_NAME}"

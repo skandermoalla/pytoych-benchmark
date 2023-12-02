@@ -1,4 +1,4 @@
-name: template-project-name
+name: pytoych-benchmark
 channels:
   - conda-forge
 dependencies:

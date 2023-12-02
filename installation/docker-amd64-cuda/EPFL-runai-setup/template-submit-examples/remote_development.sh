@@ -4,9 +4,9 @@
 runai submit \
   --name example-remote-development \
   --interactive \
-  --image registry.rcp.epfl.ch/claire/moalla/template-project-name:dev-latest-moalla \
+  --image registry.rcp.epfl.ch/claire/moalla/pytoych-benchmark:dev-latest-moalla \
   --pvc runai-claire-moalla-scratch:/claire-rcp-scratch \
-  -e PROJECT_ROOT_AT=/claire-rcp-scratch/home/moalla/template-project-name/dev \
+  -e PROJECT_ROOT_AT=/claire-rcp-scratch/home/moalla/pytoych-benchmark/dev \
   -e SSH_SERVER=1 \
   -e JETBRAINS_CONFIG_AT=/claire-rcp-scratch/home/moalla/remote-development/jetbrains-config \
   -- sleep infinity
@@ -15,9 +15,9 @@ runai submit \
 runai submit \
   --name example-remote-development \
   --interactive \
-  --image registry.rcp.epfl.ch/claire/moalla/template-project-name:dev-latest-moalla \
+  --image registry.rcp.epfl.ch/claire/moalla/pytoych-benchmark:dev-latest-moalla \
   --pvc runai-claire-moalla-scratch:/claire-rcp-scratch \
-  -e PROJECT_ROOT_AT=/claire-rcp-scratch/home/moalla/template-project-name/dev \
+  -e PROJECT_ROOT_AT=/claire-rcp-scratch/home/moalla/pytoych-benchmark/dev \
   -e SSH_SERVER=1 \
   -e JETBRAINS_CONFIG_AT=/claire-rcp-scratch/home/moalla/remote-development/jetbrains-config \
   -e PYCHARM_IDE_AT=/claire-rcp-scratch/home/moalla/remote-development/pycharm \
@@ -31,9 +31,9 @@ runai submit \
 runai submit \
   --name example-remote-development \
   --interactive \
-  --image registry.rcp.epfl.ch/claire/moalla/template-project-name:dev-latest-moalla \
+  --image registry.rcp.epfl.ch/claire/moalla/pytoych-benchmark:dev-latest-moalla \
   --pvc runai-claire-moalla-scratch:/claire-rcp-scratch \
-  -e PROJECT_ROOT_AT=/claire-rcp-scratch/home/moalla/template-project-name/dev \
+  -e PROJECT_ROOT_AT=/claire-rcp-scratch/home/moalla/pytoych-benchmark/dev \
   -e SSH_SERVER=1 \
   -e VSCODE_CONFIG_AT=/claire-rcp-scratch/home/moalla/remote-development/vscode-server \
   -- sleep infinity
@@ -45,9 +45,9 @@ runai submit \
 runai submit \
   --name example-remote-development \
   --interactive \
-  --image registry.rcp.epfl.ch/claire/moalla/template-project-name:dev-latest-moalla \
+  --image registry.rcp.epfl.ch/claire/moalla/pytoych-benchmark:dev-latest-moalla \
   --pvc runai-claire-moalla-scratch:/claire-rcp-scratch \
-  -e PROJECT_ROOT_AT=/claire-rcp-scratch/home/moalla/template-project-name/dev \
+  -e PROJECT_ROOT_AT=/claire-rcp-scratch/home/moalla/pytoych-benchmark/dev \
   -e JUPYTER_SERVER=1 \
   -- sleep infinity
 

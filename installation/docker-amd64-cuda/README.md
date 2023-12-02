@@ -92,7 +92,7 @@ Follow the steps below to get started.
        the [obtaining/building the environment](#obtainingbuilding-the-environment)
        section of the README.
        (**EPFL Note**: _you can give the link to your generic image on your lab's registry to your teammates
-       e.g., ic-registry.epfl.ch/your-lab/your-gaspar/template-project-name_.)
+       e.g., ic-registry.epfl.ch/your-lab/your-gaspar/pytoych-benchmark_.)
 
 9. Remove the template sections that you've completed from this file (indicated with **TEMPLATE TODO**)
    to only leave the instructions relevant to the next users.
@@ -217,8 +217,8 @@ We provide the following guides for obtaining/building and running the environme
 Clone the git repository.
 
 ```bash
-git clone <URL/SSH> template-project-name
-cd template-project-name
+git clone <URL/SSH> pytoych-benchmark
+cd pytoych-benchmark
 ```
 
 ### Obtain/build the images
@@ -345,7 +345,7 @@ Then you can:
     # You can for example open tmux shells and run your experiments in them.
     ./template.sh run your_command
     ./template.sh run python --version
-    ./template.sh run python -m template_package_name.some_experiment some_arg=some_value
+    ./template.sh run python -m pytoych_benchmark.some_experiment some_arg=some_value
     ```
   These containers start with the entrypoint and then run the command you specified.
   By default, they are automatically removed after they exit.
@@ -384,7 +384,7 @@ You can use your favorite container runtime to run these images.
 They have an entrypoint which installs the project with pip
 and expects it to be mounted in the container and its location specified with the
 environment variable `PROJECT_ROOT_AT`.
-E.g., you can mount it at `/project/template-project-name` and specify `PROJECT_ROOT_AT=/project/template-project-name`.
+E.g., you can mount it at `/project/pytoych-benchmark` and specify `PROJECT_ROOT_AT=/project/pytoych-benchmark`.
 The entrypoint can then take any command to run in the container and will run it with PID 1.
 (If you don't specify the `PROJECT_ROOT_AT`, the entrypoint will skip the project installation and warn you about it.)
 
