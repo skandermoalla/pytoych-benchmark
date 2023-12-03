@@ -1,187 +1,6 @@
 # Installation with Docker (OCI container)
 
-## Template getting started
-
-> [!IMPORTANT]
-> **TEMPLATE TODO:**
-> Follow the instructions, then delete this section.
-
-This template provides a Docker setup to define your environment.
-For detailed information on the setup, refer to the next section [(_More details on the
-setup_)](#more-details-on-the-setup).
-Follow the steps below to get started.
-
-1. Choose the platform and hardware acceleration that you will build the image for.
-   You have to pick one as fully specified environment files are not trivially portable across platforms
-   and hardware accelerations.
-   Available packages may differ for different platforms and hardware accelerations,
-   so in general, you cannot freeze an environment used for a platform and create it in another.
-
-   The default platform is Linux (fixed) on AMD64 CPUs `amd64` (can be changed to e.g. `arm64`)
-   with support for NVIDIA GPUs.
-   (reflected in the name of the directory `docker-amd64-cuda` by default).
-   To edit it, run
-   ```bash
-   # When in the PROJECT_ROOT directory.
-   # For examples run:
-   ./installation/edit-platform-and-acceleration.sh
-   # To do the change run:
-   ./installation/edit-platform-and-acceleration.sh docker CURR_PLATFORM CURR_ACCELERATION NEW_PLATFORM NEW_ACCELERATION
-   # The hardware acceleration will be determined by the packages you install.
-   # E.g. if you install PyTorch with CUDA, set the acceleration to cuda.
-   ```
-   The template currently supports setting only a single platform & hardware acceleration combination.
-   You can always adapt it to have multiple platforms
-   (in some cases, may just get away with adding a line to the build platforms,
-   and in others may need separate Dockerfiles and environment files.
-   Test them, and ensure your results/conclusions hold across platforms.)
-2. The remaining commands will be run from this `installation/docker-amd64-cuda` directory.
-   ```bash
-   cd installation/docker-amd64-cuda
-   ```
-3. Choose whether you will start your image and environment from scratch (Ubuntu image and new conda environment),
-   or if you will base it from an existing image already having a Python environment
-   (e.g., the [NGC images](https://catalog.ngc.nvidia.com/containers)).
-    - The `from-scratch` installation is based on an Ubuntu image (which you can change if you want), installs
-      conda and manages all the dependencies with it.
-
-      This is a good option if you want full control over your environment, e.g., know exactly which system packages
-      are installed, pick the Python version, pick all the Python dependencies, etc.
-    - The `from-python` installation assumes that you base your image from an image which
-      already has a Python environment and that this environment is well configured
-      to be extended with pip, independently of how Python is installed
-      (e.g. if with system Python like the NGC Pytorch image, nothing to do, but if with conda then
-      the environment must be configured to be activated by default).
-
-      This is a great option to get started quickly with a well-tuned environment, and only add missing
-      dependencies.
-      However, this comes at the cost of not choosing your Python version and
-      not having a granular choice over your dependencies.
-
-   The default base is `from-python` to quickly get started with the NGC images.
-   Run the following if you want to edit it.
-   ```bash
-   # from-base can be from-scratch or from-python
-   ./template.sh edit_from_base <from-base>
-   ```
-   Delete the two folders `from-scratch` and `from-python` after the choice is made.
-4. Edit `compose-base.yaml` to specify your base image (`BASE_IMAGE`) and its eventual options.
-   E.g., the NGC image you use as a base image and its entrypoint (`BASE_ENTRYPOINT`) in the `from-python` option
-   or the Ubuntu and conda version (`CONDA_URL`) in the `from-scratch` option.
-5. Specify your initial dependencies.
-   Follow the [instructions to maintain the environment](#from-python-instructions-to-maintain-the-environment)
-   up to (including) the manual editing section.
-   Commit so that you can get back to this file to edit it manually.
-   Delete the section of the from-base you are not using.
-6. Build the environment following the instructions to [build the environment](#obtainingbuilding-the-environment).
-   (Obviously, you'll have to build the generic images not pull them.)
-7. Follow the instructions to [run the environment](#the-environment) with your target
-   deployment option.
-   If everything goes well (we suggested checking that all your dependencies are there
-   and importing the complex ones), pin your dependencies following the
-   instructions to [freeze the environment](#freeze-the-environment).
-8. Push your generic images (run and dev with the root user) to some registry if not done already.
-   This will be handy for you, for sharing it with your teammates, and when you open-source your project later.
-    1. Find a public (or private for teammates) repository to push your generic images.
-       E.g., your personal Docker Hub registry has free unlimited public repositories.
-    2. Push the generic images to the registry you chose.
-       ```bash
-       ./template.sh push_generic FULL_IMAGE_NAME_WITH_REGISTRY
-       ```
-    3. Add this link to the TODO ADD PULL_IMAGE_NAME in
-       the [obtaining/building the environment](#obtainingbuilding-the-environment)
-       section of the README.
-       (**EPFL Note**: _you can give the link to your generic image on your lab's registry to your teammates
-       e.g., ic-registry.epfl.ch/your-lab/your-gaspar/pytoych-benchmark_.)
-
-9. Remove the template sections that you've completed from this file (indicated with **TEMPLATE TODO**)
-   to only leave the instructions relevant to the next users.
-
-## More details on the setup
-
-> [!IMPORTANT]
-> **TEMPLATE TODO:**
-> Read/skim over this section, then delete it.
-
-The setup is based on Docker and Docker Compose and is adapted from
-the [Cresset template](https://github.com/cresset-template/cresset).
-It is composed of Dockerfiles to build the image containing the runtime and development environments,
-and Docker Compose files to set build arguments in the Dockerfile and run it locally.
-
-Most of these files are templates that should suit most use cases.
-They read project/user-specific information from the other files such as the project dependencies and user
-configuration.
-Typically, the files you will have to edit are `compose-base.yaml`, `.env`, and the `dependencies/` files,
-
-Here's a summary of all the files in this directory.
-
-```
-docker-amd64-cuda/
-├── Dockerfile                       # Dockerfile template. Edit if you are building things manually.
-├── Dockerfile-user                  # Dockerfile template. Adds the dev and user layers.
-├── compose-base.yaml                # Sets the build args for the Dockerfile.
-│                                    # Edit to change the base image or package manager.
-├── compose.yaml                     # Docker Compose template. Edit if you have a custom local deployment or change the hardware acceleration.
-├── template.sh                      # A utility script to help you interact with the template (build, deploy, etc.).
-├── .env                             # Will contain your personal configuration. Edit to specify your personal configuration.
-├── dependencies/
-│   ├── environment.yml              # If chose the `from-scratch` option. Conda and pip dependencies.
-│   ├── requirements.txt             # If chose the `from-python` option. pip dependencies.
-│   ├── apt-build.txt                # System dependencies (from apt) for building the conda environment, and potentially other software.
-│   ├── apt-runtime.txt              # System dependencies (from apt) needed to run your code.
-│   ├── apt-dev.txt                  # System dependencies (from apt) needed to develop in a container e.g. vim.
-│   └── update-env-file.sh           # Template file. A utility script to update the environment files.
-├── entrypoints/
-│   ├── entrypoint.sh                # The main entrypoint that install the project and triggers other entrypoints.
-│   ├── pre-entrypoint.sh            # If the base images includes an entrypoint, this runs it before the main entrypoint.
-│   ├── dummy.sh                     # A dummy entrypoint useful in some cases.
-│   ├── logins-setup.sh              # Manages logging into services like wandb.
-│   └── remote-development-setup.sh  # Contains utilities for setting up remote development with VSCode, PyCharm, Jupyter.
-└── EPFL-runai-setup/                # Template files to deploy on the EPFL Run:ai Kubernetes cluster.
-    ├── ...
-    └── README.md                    # Instructions to deploy on the EPFL Run:ai Kubernetes cluster. Usesul for other managed clusters too.
-```
-
-### Details on the main Dockerfile
-
-The Dockerfile specifies all the steps to build the environment in which your code will run.
-It makes efficient use of caching and multi-stage builds to speed up build time and keep final images small.
-
-Broadly, it has 3 main stages:
-
-1. A stage to download, install, and build dependencies.
-   It is used to build the Conda environment, for example, in the `from-scratch` option.
-   This stage typically requires build-time dependencies such as compilers, etc. which are not needed
-   at runtime.
-2. A stage to install runtime dependencies and copy dependencies from the previous stage.
-   Runtime dependencies are typically lighter than build-time dependencies.
-3. A stage extending the runtime stage with development dependencies.
-   These dependencies and utilities (e.g., vim, pretty shell, SSH server, etc.) are not needed at runtime
-   but are useful when developing in the container.
-
-The two last stages can be built without a user (the user will be root), or extended to include a user
-(specified in your `.env` file later).
-This is done in the `Dockerfile-user` file.
-
-### Details on the Docker Compose files
-
-The Docker Compose files are used to configure the build arguments used by the Dockerfile
-when building the images and to configure the container when running it locally.
-
-They support building multiple images corresponding to the runtime and development stages with or without a user
-and running on each with either `cpu` or `cuda` support.
-
-We provide a utility script, `template.sh`, to help you interact with Docker Compose.
-It has a function for each of the main operations you will have to do.
-
-You can always interact directly with `docker compose` if you prefer and get examples from the `./template.sh` script.
-
 ## The environment
-
-> [!IMPORTANT]
-> **TEMPLATE TODO:**
-> When open-sourcing your project, share the generic images you built on a public registry.
-> Otherwise, delete the last bullet below in the guides for running the environment.
 
 We provide the following guides for obtaining/building and running the environment:
 
@@ -200,12 +19,6 @@ We provide the following guides for obtaining/building and running the environme
   in [Running with your favorite container runtime](#running-with-your-favorite-container-runtime) for the details.
 
 ## Obtaining/building the environment
-
-> [!IMPORTANT]
-> **TEMPLATE TODO:**
-> After pushing your generic images, provide the image name on your private registry to your teammates,
-> or later on a public registry if you open-source your project.
-> Add it below in the TODO ADD PULL_IMAGE_NAME.
 
 ### Prerequisites
 
@@ -261,7 +74,7 @@ cd installation/docker-amd64-cuda
     - Pull the generic images if they're available.
       ```bash
       # Pull the generic image if available.
-      ./template.sh pull_generic TODO ADD PULL_IMAGE_NAME (private or public).
+      ./template.sh pull_generic docker.io/skandermoalla/pytoych-benchmark
       ````
     - Otherwise, build them.
       ```bash
@@ -287,14 +100,6 @@ cd installation/docker-amd64-cuda
    These will be the images that you actually run and deploy to match the permissions on your mounted storage.
 
 ## Running locally with Docker Compose
-
-> [!IMPORTANT]
-> **TEMPLATE TODO:**
-> If you change the hardware acceleration
-> 1. change the `compose.yaml` file to adapt the
-     > `run-local-cuda` and `dev-local-cuda` to the new hardware acceleration.
-> 2. change the supported values of the `ACCELERATION` listed below.
-> 3. change the prerequisites for the hardware acceleration.
 
 **Prerequisites**
 
@@ -370,13 +175,9 @@ Otherwise, through the image directly and you'll have to add the mount yourself
 
 ## Running with your favorite container runtime
 
-> [!IMPORTANT]
-> **TEMPLATE TODO:**
-> Provide the images and fill the TODO link, or delete this section.
-
 An image with the runtime environment and an image with the development environment (includes shell utilities)
 both running as root (but with a configured zshell for users specified at runtime as well)
-is available at TODO: LINK TO PUBLIC IMAGE.
+is available at `docker.io/skandermoalla/pytoych-benchmark`
 
 The tags are `run-latest-root` and `dev-latest-root` for the runtime and development images respectively.
 You can use your favorite container runtime to run these images.
