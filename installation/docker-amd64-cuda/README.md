@@ -255,7 +255,7 @@ so it's a good idea to commit the changes to the environment file before/after r
 The script isn't just a `pip freeze` and the file it generates isn't made to recreate the environment from scratch,
 it is tightly coupled to the Dockerfile and the base image it uses.
 In this sense, packages that are already installed in the base image or installed by the Dockerfile
-may not be listed in the file or may be listed without a version 
+may not be listed in the file or may be listed without a version
 (this is because that may have been installed from wheels not present anymore in the final image).
 
 The purpose of the generated `requirements.txt` is to be used always at the same stage of the Dockerfile
@@ -263,7 +263,7 @@ to install the same set of missing dependencies between its previous stage and i
 (so not reinstall the dependencies already installed in the base image, for example).
 In any case,
 the Dockerfile also records the snapshots of the dependency files used to generate each stage for debugging that can be
-found in the `/opt/template-dependencies/` directory. 
+found in the `/opt/template-dependencies/` directory.
 
 ```bash
 update-env-file
