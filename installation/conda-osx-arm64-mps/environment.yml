@@ -1,8 +1,12 @@
 name: pytoych-benchmark
 channels:
+  - pytorch
   - conda-forge
 dependencies:
   - python=3.10
+  - pytorch
+  - torchvision
+  - torchaudio
   - pip
   - pip:
       - hydra-core
