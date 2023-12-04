@@ -7,7 +7,7 @@ This directory contains scripts to reproduce the results of the paper.
 The benchmark can be run by running the WandB sweep `runtime-benchmark.yaml`.
 Details to create it and run are provided in the file.
 
-The hardware specs (CPU and GPU) are automatically picked up and if
+The hardware specs (CPU and GPU) are automatically picked up, and if
 you want to tag your machine, you can add an override config `src/configs/override/mnist.yaml` with the following content:
 
 ```yaml
@@ -28,6 +28,8 @@ Run them with
 # From the PROJECT ROOT
 zsh reproducibility-scripts/script_name.sh
 ```
+
+Read the instructions in each script for their setups (download models, etc).
 
 * `train-model.sh` describes how to train a model and export it.
 * `evaluate-saved-model.sh` describes how to load the model and evaluate it.
