@@ -1,0 +1,15 @@
+defaults:
+  # Common setup.
+  - setup
+  # This file.
+  - _self_
+  # Optional override for development.
+  - optional override: mnist_evaluate
+
+######################################################################
+
+device: cuda
+load_model_dir: ??? # Mandatory field. Given relative to the outputs directory.
+test:
+  batch_size: 1000
+  n_workers: 2

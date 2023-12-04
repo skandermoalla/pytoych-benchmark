@@ -138,6 +138,7 @@ dmypy.json
 # Project
 data/*
 !data/README.md
+!download_mnist.py
 
 outputs/*
 !outputs/README.md

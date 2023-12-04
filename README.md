@@ -10,12 +10,6 @@ It is meant to show how a project started from the template looks like.
 
 ### Code and development environment
 
-> [!IMPORTANT]
-> **TEMPLATE TODO**:
-> Update the installation methods and platforms you support, delete the rest, and delete this note.
-> 3. Specify the hardware on which you ran your experiments (e.g., type of CPU/GPU and size of memory) and
->    the minimum hardware required to run your code if applicable (e.g., NVIDIA GPU with 80GB of memory).
-
 We support the following methods and platforms for installing the project dependencies and running the code.
 
 - **Docker/OCI-container for AMD64 machines (+ NVIDIA GPUs)**:
@@ -26,39 +20,29 @@ We support the following methods and platforms for installing the project depend
 
   To get started, follow the instructions in `installation/docker-amd64-cuda/README.md`.
 
-  We ran our experiments on 80GB NVIDIA A100 GPUs and AMD EPYC 7543 CPUs.
-  To run them, you should have at least TODO: FILL IN THE MINIMUM HARDWARE REQS IF APPLICABLE.
+  We ran our experiments on an 80GB NVIDIA A100 GPU and AMD EPYC 7543 CPUs.
 
 - **Conda for osx-arm64**
   This option works for macOS machines with Apple Silicon and can leverage MPS acceleration.
 
   To get started, follow the instructions in `installation/conda-osx-arm64-mps/README.md`.
 
-  We ran our experiments on an Apple M2 MacBook Air with 24GB of memory.
-  To run them, you should have at least TODO: FILL IN THE MINIMUM HARDWARE REQS IF APPLICABLE.
+  We ran our experiments on an Apple M2 MacBook Air with 10 GPU cores and 24GB of memory.
 
 ### Data
-
-> [!IMPORTANT]
-> **TEMPLATE TODO**:
-> Fill `data/README.md` or delete this section, then delete this note.
 
 Refer to `data/README.md`.
 
 ### Logging and tracking experiments
 
 We use [Weights & Biases](https://wandb.ai/site) to log and track our experiments.
-If you're logged in, your default entity will be used (A fixed entity is not set in the config),
+If you're logged in, your default entity will be used (a fixed entity is not set in the config),
 and you can set another entity with the `WANDB_ENTITY` environment variable.
 Otherwise, the runs will be anonymous (you don't need to be logged in).
 
 ## Reproduction and Experimentation
 
 ### Reproducing our results
-
-> [!IMPORTANT]
-> **TEMPLATE TODO**:
-> Keep these scripts up to date and run your experiments using them. Delete this note when shipping.
 
 We provide scripts to reproduce our work in the `reproducibility-scripts/` directory.
 It has a README at its root describing which scripts reproduce which experiments.
@@ -72,10 +56,6 @@ You can get examples of how to do so in the `reproducibility-scripts/` directory
 
 ### Using trained models and experimenting with results
 
-> [!IMPORTANT]
-> **TEMPLATE TODO**:
-> Do provide the runs and trained models or update/delete this section, then delete this note.
-
 We share our Weights and Biases runs in [this W&B project](https://wandb.ai/claire-labo/pytoych-benchmark).
 
 Moreover, we make our trained models available.
@@ -83,18 +63,14 @@ You can follow the instructions in `outputs/README.md` to download and use them.
 
 ## Repository structure
 
-> [!IMPORTANT]
-> **TEMPLATE TODO**:
-> Provide a quick overview of the main files in the repo for users to understand your code,
-> then delete this note.
-
 Below, we give a description of the main files and directories in this repository.
 
 ```
  └─── src/                         # Source code.
-    └── template-package-name      # Our package.
+    └── pytoych_benchmark          # Our package.
         ├── configs/               # Hydra configuration files.
-        └── some_experiment.py     # Some experiment.
+        ├── models/mnist.py        # A CNN model for MNIST.
+        └── mnist.py               # Trains and evaluates a model on MNIST.
 ```
 
 ## Contributing

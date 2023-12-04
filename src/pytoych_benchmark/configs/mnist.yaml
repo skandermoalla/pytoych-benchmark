@@ -1,0 +1,26 @@
+defaults:
+  # Common setup.
+  - setup
+  # This file.
+  - _self_
+  # Optional override for development.
+  - optional override: mnist
+
+######################################################################
+
+device: cuda
+hardware_tag: null  # To tag some cluster, for example. (Add it to the overrides.)
+
+train:
+  batch_size: 64
+  n_epochs: 6
+  lr: 0.01
+  lr_decay_per_epoch: 0.7
+  log_interval: 100
+  n_workers: 2
+
+test:
+  batch_size: 1000
+  n_workers: ${train.n_workers}
+
+save_model: True
