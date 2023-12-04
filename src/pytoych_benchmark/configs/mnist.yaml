@@ -24,3 +24,6 @@ test:
   n_workers: ${train.n_workers}
 
 save_model: True
+
+# Workaround for WandB sweeps. Only use for sweeps.
+device_suggested: ${device}

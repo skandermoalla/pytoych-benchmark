@@ -14,7 +14,9 @@ parameters:
     value: runtime-benchmark
   seed:
     value: 2508
-  device:
+  # Sweep record their config, regardless of whether Hydra changes it and resubmits it.
+  # So to resolve the devices and record the new ones, we specify a suggested device here.
+  device_suggested:   # Will resolve to CPU when not available.
     values: [mps, cuda]
   train.n_workers:
     values: [0, 2, 4]
