@@ -58,7 +58,7 @@ Here are some examples.
 ```bash
 # When in the PROJECT_ROOT directory.
 python -m pytoych_benchmark.some_experiment some_arg=some_value
-source reproducibility-scripts/some-experiment.sh
+zsh reproducibility-scripts/some-experiment.sh
 ```
 
 ## Maintaining the environment
