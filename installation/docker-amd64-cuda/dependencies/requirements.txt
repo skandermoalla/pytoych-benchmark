@@ -157,6 +157,7 @@ protobuf==4.24.4
 psutil
 ptxcompiler
 ptyprocess==0.7.0
+py-cpuinfo==9.0.0
 pyarrow
 pyasn1==0.5.0
 pyasn1-modules==0.3.0
