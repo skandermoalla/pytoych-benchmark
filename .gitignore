@@ -142,5 +142,6 @@ data/*
 
 outputs/*
 !outputs/README.md
+!outputs/sweep-results.png
 
 wandb
