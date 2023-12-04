@@ -198,11 +198,11 @@ Note the emphasis on having a frozen copy `run` of the repository for running un
 
 ### Weights&Biases
 
-Your W&B API key should be exposed as the `WANDB_API_KEY` environment variable.
+Your W&B API key should be exposed as the `WANDB_API_KEY_AT` environment variable.
 Run:ai doesn't support Kubernetes secrets yet, and you don't want to pass it as a clear environment variable
 (visible in the Run:ai dashboard),
 so an alternative is to have it in your PVC and pass it with the
-`-e WANDB_API_KEY_FILE` environment variable in your `runai submit` command and let the template handle it.
+`-e WANDB_API_KEY_FILE_AT` environment variable in your `runai submit` command and let the template handle it.
 
 E.g.,
 
