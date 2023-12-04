@@ -12,12 +12,12 @@ parameters:
     value: online
   job_subdir:
     value: runtime-benchmark
+  seed:
+    value: 2508
   device:
     values: [mps, cuda]
   train.n_workers:
     values: [0, 2, 4]
-  seed:
-    values: [1, 1]
 
 command:
   - python
