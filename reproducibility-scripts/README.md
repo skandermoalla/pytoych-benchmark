@@ -22,5 +22,12 @@ hardware_tag: MacBook Air
 
 We performed one experiment to show how you can save model weights, share them, and reproduce the results with them.
 
+Run them with
+
+```bash
+# From the PROJECT ROOT
+zsh reproducibility-scripts/script_name.sh
+```
+
 * `train-model.sh` describes how to train a model and export it.
 * `evaluate-saved-model.sh` describes how to load the model and evaluate it.
