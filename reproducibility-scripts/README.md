@@ -1,6 +1,26 @@
-> [!IMPORTANT]
-> **TEMPLATE TODO**
-> This directory should contain the commands run to reproduce the results in the paper.
-> E.g. the commands to train, evaluate, and produce the plots in the paper.
-> This can also include hyperparameter search commands like wandb sweeps.
-> Ideally when you run unattended jobs, your jobs should run scripts in this directory.
+# Reproducibility scripts
+
+This directory contains scripts to reproduce the results of the paper.
+
+## Benchmark
+
+The benchmark can be run by running the wandb sweep `runtime-benchmark.yaml`.
+Details to create it and run are provided in the file.
+
+THe hardware specs (CPU and GPU) are automatically picked up and if
+you want to tag your machine, you can add an override config `src/configs/override/mnist.yaml` with the following content:
+
+```yaml
+# @package _global_
+# The above line should appear in the override configs so that they sit at the root of the config tree.
+
+device: mps
+hardware_tag: MacBook Air
+```
+
+## Experiments
+
+We performed one experiment to show how you can save model weights, share them, and reproduce the results with them.
+
+* `train-model.sh` describes how to train a model and export it.
+* `evaluate-saved-model.sh` describes how to load the model and evaluate it.

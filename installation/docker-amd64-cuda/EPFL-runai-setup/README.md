@@ -73,13 +73,6 @@ You can rebuild the images with `./template.sh build` to tag them with the lates
 ./template.sh push RCP
 ```
 
-> [!IMPORTANT]
-> **TEMPLATE TODO:**
-> Give the generic image name you just pushed
-> (e.g., `ic-registry.epfl.ch/LAB_NAME/USR/PROJECT_NAME`)
-> to your teammates so that they can directly build their user-configured images on top of it.
-> Replace the _TODO ADD PULL_IMAGE_NAME_ in the `installation/docker-amd64-cuda/README` file with this name.
-
 ### Clone your repository in your PVCs
 
 We strongly suggest having two instances of your project repository on your PVCs.
