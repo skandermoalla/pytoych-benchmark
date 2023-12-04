@@ -110,7 +110,7 @@ def main(config: DictConfig) -> None:
 
     # Resolve device.
     with omegaconf.open_dict(config):
-        # Fix the device (it's resolved to config.device by default).
+        # Fix the devices (it's resolved to config.device by default).
         config.device_suggested = config.device_suggested
         if (
             config.device_suggested.startswith("cuda") and not torch.cuda.is_available()
@@ -118,6 +118,8 @@ def main(config: DictConfig) -> None:
             config.device_suggested == "mps" and not torch.backends.mps.is_available()
         ):
             config.device = "cpu"
+        else:
+            config.device = config.device_suggested
 
     # Record the hardware specs
     # For CPU
