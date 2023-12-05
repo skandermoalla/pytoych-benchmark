@@ -4,8 +4,9 @@ This directory contains scripts to reproduce the results of the paper.
 
 ## Benchmark
 
-The benchmark can be run by running the WandB sweep `runtime-benchmark.yaml`.
+The benchmark (figure in the README) can be run by running the WandB sweep `runtime-benchmark.yaml`.
 Details to create it and run are provided in the file.
+You can also find the live results at https://wandb.ai/claire-labo/pytoych-benchmark.
 
 The hardware specs (CPU and GPU) are automatically picked up, and if
 you want to tag your machine, you can add an override config `src/configs/override/mnist.yaml` with the following content:
