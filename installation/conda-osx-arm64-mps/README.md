@@ -46,20 +46,24 @@ mamba activate pytoych-benchmark
 pip install -e .
 ```
 
-## Running the code in the environment
+## Running code in the environment
 
 ```bash
 mamba activate pytoych-benchmark
 ```
 
-Run the scripts from the `PROJECT_ROOT` directory.
+Run scripts from the `PROJECT_ROOT` directory.
 Here are some examples.
 
 ```bash
 # When in the PROJECT_ROOT directory.
-python -m pytoych_benchmark.some_experiment some_arg=some_value
-zsh reproducibility-scripts/some-experiment.sh
+# template_experiment is an actual script that you can run.
+python -m pytoych_benchmark.template_experiment some_arg=some_value
+zsh reproducibility-scripts/template-experiment.sh
 ```
+
+The environment is set up.
+Return to the root README for the rest of the instructions to run our experiments.
 
 ## Maintaining the environment
 
@@ -138,7 +142,7 @@ so it's a good idea to commit the changes to the environment file before and aft
 
 ```bash
 # When in the PROJECT_ROOT directory.
-source installation/conda-osx-arm64-mps/update-env-file.sh
+zsh installation/conda-osx-arm64-mps/update-env-file.sh
 ```
 
 There are some caveats (e.g., packages installed from GitHub with pip), so have a look at

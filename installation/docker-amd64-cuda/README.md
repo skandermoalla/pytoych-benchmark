@@ -9,6 +9,7 @@ We provide the following guides for obtaining/building and running the environme
   the instructions [run locally with Docker Compose](#running-locally-with-docker-compose).
 - To run on the EPFL Run:ai clusters, follow the instructions
   to [obtain/build the environment](#obtainingbuilding-the-environment)
+  (perform them on your local machine)
   then refer to the `./EPFL-runai-setup/README.md`.
 
   The guide also provides instructions to do remote development on the Run:ai cluster.
@@ -99,6 +100,9 @@ cd installation/docker-amd64-cuda
    and tag them `*-*-${USR}` instead of `*-*-root`.
    These will be the images that you actually run and deploy to match the permissions on your mounted storage.
 
+For the local deployment option with Docker Compose, follow the instructions below,
+otherwise get back to the instructions for your deployment option you're following.
+
 ## Running locally with Docker Compose
 
 **Prerequisites**
@@ -148,9 +152,10 @@ Then you can:
 - Run jobs in independent containers running the runtime image with
     ```bash
     # You can for example open tmux shells and run your experiments in them.
+    # template_experiment is an actual script that you can run.
     ./template.sh run your_command
     ./template.sh run python --version
-    ./template.sh run python -m pytoych_benchmark.some_experiment some_arg=some_value
+    ./template.sh run python -m pytoych_benchmark.template_experiment some_arg=some_value
     ```
   These containers start with the entrypoint and then run the command you specified.
   By default, they are automatically removed after they exit.
@@ -160,6 +165,10 @@ Then you can:
   runs the original entrypoint of your base image if it exists,
   and execs your command with PID 1.
   Only do so if you need to debug the entrypoint itself or if you have a custom use case.
+
+  You can read the following section for quick tips on development with containers,
+  then return to the root README for the rest of the instructions to run our experiments.
+
 
 ### Development
 
