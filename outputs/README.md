@@ -5,7 +5,7 @@
 Our outputs consist of benchmark results all available in [this W&B project](https://wandb.ai/claire-labo/pytoych-benchmark).
 
 Furthermore, for one experiment, we make our trained models available.
-Download them [here](https://www.icloud.com/iclouddrive/075gJe3IqQ5QtRgxlGAEk5xbQ#saved_models)
+Download them [here](https://www.icloud.com/iclouddrive/075gJe3IqQ5QtRgxlGAEk5xbQ#saved_models).
 Then move them to the machine where you are running the code and extract them with the following commands:
 
 ```bash
